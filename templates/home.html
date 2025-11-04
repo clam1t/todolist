@@ -17,19 +17,17 @@
     </div>
 
     <div class="forms-container">
-        <form class="auth-form active" id="login-form">
+        <form class="auth-form active" id="login-form" method="POST" action="{{ url_for('login') }}">
             <input type="text" name="username" placeholder="WARRIOR NAME" required>
             <input type="password" name="password" placeholder="PASSWORD OF DISCIPLINE" required>
-            <button type="button" onclick="window.location.href='{{ url_for('dashboard') }}'">EMBARK ON THE GRIND</button>
+            <button type="submit">EMBARK ON THE GRIND</button>
             <p class="auth-link">NOT HARD ENOUGH? <a href="#" class="switch-tab" data-tab="register">ENLIST NOW</a></p>
         </form>
 
-        <form class="auth-form" id="register-form">
+        <form class="auth-form" id="register-form" method="POST" action="{{ url_for('register') }}">
             <input type="text" name="username" placeholder="WARRIOR NAME" required>
-            <input type="email" name="email" placeholder="WARRIOR EMAIL" required>
             <input type="password" name="password" placeholder="PASSWORD OF DISCIPLINE" required>
-            <input type="password" name="confirm_password" placeholder="CONFIRM PASSWORD" required>
-            <button type="button" onclick="window.location.href='{{ url_for('dashboard') }}'">ENLIST IN THE GRIND</button>
+            <button type="submit">ENLIST IN THE GRIND</button>
             <p class="auth-link">ALREADY A WARRIOR? <a href="#" class="switch-tab" data-tab="login">LOGIN HERE</a></p>
         </form>
     </div>
