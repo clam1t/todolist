@@ -1,0 +1,24 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}All Tasks{% endblock %}
+
+{% block content %}
+<h1 style="color: #fff; text-align: center; text-transform: uppercase; letter-spacing: 2px;">ALL TASKS</h1>
+<div class="task-list">
+    <div class="task-card">
+        <h3>Morning Run</h3>
+        <p>Deadline: 2023-12-01</p>
+        <p>Priority: High</p>
+        <button class="task-btn">View Details</button>
+    </div>
+    <div class="task-card">
+        <h3>Coding Challenge</h3>
+        <p>Deadline: 2023-12-05</p>
+        <p>Priority: Medium</p>
+        <button class="task-btn">View Details</button>
+    </div>
+</div>
+<div style="text-align: center; margin-top: 30px;">
+    <a href="{{ url_for('create_task') }}" class="create-btn">Create New Task</a>
+</div>
+{% endblock %}

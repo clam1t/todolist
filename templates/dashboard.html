@@ -1,0 +1,21 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1 style="color: #fff; text-align: center; text-transform: uppercase; letter-spacing: 2px;">DASHBOARD</h1>
+<div class="dashboard-grid">
+    <a href="{{ url_for('tasks') }}" class="dashboard-card">
+        <h2>View All Tasks</h2>
+        <p>See all your current tasks</p>
+    </a>
+    <a href="{{ url_for('create_task') }}" class="dashboard-card">
+        <h2>Create New Task</h2>
+        <p>Add a new task to your grind</p>
+    </a>
+    <a href="{{ url_for('task_by_id') }}" class="dashboard-card">
+        <h2>Find Task by ID</h2>
+        <p>Search for specific task</p>
+    </a>
+</div>
+{% endblock %}

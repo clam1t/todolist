@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('dashboard') }}" class="logo">GRIND LIST</a>
+            <div class="nav-links">
+                <a href="{{ url_for('dashboard') }}">DASHBOARD</a>
+                <a href="{{ url_for('tasks') }}">ALL TASKS</a>
+                <a href="{{ url_for('create_task') }}">CREATE TASK</a>
+                <a href="{{ url_for('task_by_id') }}">FIND TASK</a>
+                <a href="{{ url_for('index') }}">LOGOUT</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

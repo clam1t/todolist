@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<section id="home">
+    <h1 style="color: #fff; text-align: center; text-transform: uppercase; letter-spacing: 2px;">STAY HARD</h1>
+    <p style="color: #fff; text-align: center; font-weight: bold; max-width: 800px; margin: 0 auto 30px;">"When you think you're done, you're only 40% done. The other 60% is mental." - David Goggins</p>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <img src="{{ url_for('static', filename='pictures/c4db3ba701593078fd3c6efbf90263bf.jpg') }}" alt="Motivation" style="border: 2px solid #fff; max-width: 100%;">
+    </div>
+
+    <div class="auth-tabs">
+        <button class="tab-btn active" data-tab="login">LOGIN</button>
+        <button class="tab-btn" data-tab="register">REGISTER</button>
+    </div>
+
+    <div class="forms-container">
+        <form class="auth-form active" id="login-form">
+            <input type="text" name="username" placeholder="WARRIOR NAME" required>
+            <input type="password" name="password" placeholder="PASSWORD OF DISCIPLINE" required>
+            <button type="button" onclick="window.location.href='{{ url_for('dashboard') }}'">EMBARK ON THE GRIND</button>
+            <p class="auth-link">NOT HARD ENOUGH? <a href="#" class="switch-tab" data-tab="register">ENLIST NOW</a></p>
+        </form>
+
+        <form class="auth-form" id="register-form">
+            <input type="text" name="username" placeholder="WARRIOR NAME" required>
+            <input type="email" name="email" placeholder="WARRIOR EMAIL" required>
+            <input type="password" name="password" placeholder="PASSWORD OF DISCIPLINE" required>
+            <input type="password" name="confirm_password" placeholder="CONFIRM PASSWORD" required>
+            <button type="button" onclick="window.location.href='{{ url_for('dashboard') }}'">ENLIST IN THE GRIND</button>
+            <p class="auth-link">ALREADY A WARRIOR? <a href="#" class="switch-tab" data-tab="login">LOGIN HERE</a></p>
+        </form>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const authForms = document.querySelectorAll('.auth-form');
+    const formsContainer = document.querySelector('.forms-container');
+
+    function switchTab(tabName) {
+        // Анимация перехода
+        formsContainer.style.opacity = '0';
+
+        setTimeout(() => {
+            // Убрать активный класс со всех кнопок и форм
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            authForms.forEach(form => form.classList.remove('active'));
+
+            // Активировать нужную кнопку и форму
+            document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(`${tabName}-form`).classList.add('active');
+
+            // Плавное появление
+            formsContainer.style.opacity = '1';
+        }, 300);
+    }
+
+    // Обработчики для кнопок табов
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            switchTab(this.dataset.tab);
+        });
+    });
+
+    // Обработчики для ссылок переключения табов
+    document.querySelectorAll('.switch-tab').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            switchTab(this.dataset.tab);
+        });
+    });
+});
+</script>
+{% endblock %}

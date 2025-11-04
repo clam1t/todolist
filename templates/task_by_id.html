@@ -1,0 +1,17 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}Find Task by ID{% endblock %}
+
+{% block content %}
+<h1 style="color: #fff; text-align: center; text-transform: uppercase; letter-spacing: 2px;">FIND TASK BY ID</h1>
+<form class="search-form">
+    <input type="text" placeholder="Enter Task ID" required>
+    <button type="submit">SEARCH</button>
+</form>
+<div class="task-details" style="display: none;">
+    <h2 style="color: #fff;">Task Details</h2>
+    <p style="color: #fff;"><strong>Name:</strong> <span id="task-name"></span></p>
+    <p style="color: #fff;"><strong>Deadline:</strong> <span id="task-deadline"></span></p>
+    <p style="color: #fff;"><strong>Priority:</strong> <span id="task-priority"></span></p>
+</div>
+{% endblock %}

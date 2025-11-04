@@ -1,0 +1,19 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}Create Task{% endblock %}
+
+{% block content %}
+<h1 style="color: #fff; text-align: center; text-transform: uppercase; letter-spacing: 2px;">CREATE NEW TASK</h1>
+<form class="task-form">
+    <input type="text" placeholder="Task Name" required>
+    <input type="date" placeholder="Deadline" required>
+    <select required>
+        <option value="">Select Priority</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+    </select>
+    <textarea placeholder="Task Description"></textarea>
+    <button type="submit">CREATE TASK</button>
+</form>
+{% endblock %}
