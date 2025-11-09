@@ -168,7 +168,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* Остальные стили остаются такими же */
+
 .auth-link {
     color: #fff;
     text-align: center;
@@ -257,7 +257,7 @@ body {
     letter-spacing: 1px;
 }
 
-/* Task Styles */
+
 .task-list {
     display: grid;
     gap: 20px;
@@ -311,7 +311,7 @@ body {
     text-decoration: none;
 }
 
-/* Form Styles */
+
 .task-form, .search-form {
     max-width: 500px;
     margin: 30px auto;
@@ -358,21 +358,8 @@ body {
     border: 1px solid #fff;
 }
 
-/* Navbar Styles */
-.navbar {
-    background: rgba(0,0,0,0.8);
-    border-bottom: 2px solid #fff;
-    padding: 15px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
 
-.navbar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+
 
 .logo {
     font-size: 24px;
@@ -412,7 +399,7 @@ body {
     width: 100%;
 }
 
-/* Footer Styles */
+
 .footer {
     background: rgba(0,0,0,0.8);
     color: #fff;

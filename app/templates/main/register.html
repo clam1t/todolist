@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "main/base.html" %}
 
 {% block title %}Register{% endblock %}
 
@@ -12,7 +12,7 @@
     </div>
 
     <div class="auth-tabs">
-        <button class="tab-btn" onclick="window.location.href='{{ url_for('login') }}'">LOGIN</button>
+        <button class="tab-btn" onclick="window.location.href='{{ url_for('main.login') }}'">LOGIN</button>
         <button class="tab-btn active">REGISTER</button>
     </div>
 
@@ -22,10 +22,10 @@
         <button type="button">ENLIST IN THE GRIND</button>
     </form>
     <p class="auth-link" style="color: #fff; text-align: center; margin-top: 20px;">
-        ALREADY A WARRIOR? <a href="{{ url_for('login') }}" style="color: #fff; font-weight: bold;">LOGIN HERE</a>
+        ALREADY A WARRIOR? <a href="{{ url_for('main.login') }}" style="color: #fff; font-weight: bold;">LOGIN HERE</a>
     </p>
     <p class="auth-link" style="color: #fff; text-align: center; margin-top: 10px;">
-        <a href="{{ url_for('index') }}" style="color: #fff; font-weight: bold;">← BACK TO HOME</a>
+        <a href="{{ url_for('main.index') }}" style="color: #fff; font-weight: bold;">← BACK TO HOME</a>
     </p>
 </section>
 {% endblock %}

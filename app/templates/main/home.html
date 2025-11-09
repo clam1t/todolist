@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "main/base.html" %}
 
 {% block title %}Главная{% endblock %}
 
@@ -17,14 +17,14 @@
     </div>
 
     <div class="forms-container">
-        <form class="auth-form active" id="login-form" method="POST" action="{{ url_for('login') }}">
+        <form class="auth-form active" id="login-form" method="POST" action="{{ url_for('main.login') }}">
             <input type="text" name="username" placeholder="WARRIOR NAME" required>
             <input type="password" name="password" placeholder="PASSWORD OF DISCIPLINE" required>
             <button type="submit">EMBARK ON THE GRIND</button>
             <p class="auth-link">NOT HARD ENOUGH? <a href="#" class="switch-tab" data-tab="register">ENLIST NOW</a></p>
         </form>
 
-        <form class="auth-form" id="register-form" method="POST" action="{{ url_for('register') }}">
+        <form class="auth-form" id="register-form" method="POST" action="{{ url_for('main.register') }}">
             <input type="text" name="username" placeholder="WARRIOR NAME" required>
             <input type="password" name="password" placeholder="PASSWORD OF DISCIPLINE" required>
             <button type="submit">ENLIST IN THE GRIND</button>

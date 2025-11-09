@@ -1,15 +1,11 @@
-from flask import Flask, render_template, request, redirect
-from flask_sqlalchemy import SQLAlchemy
+"""
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-db = SQLAlchemy(app)
+from flask import Flask, render_template, request, redirect, Blueprint
+
+user = Blueprint('user', __name__, url_prefix='/user')
 
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(80), nullable=False)
+
 
 @app.route('/')
 def index():
@@ -68,6 +64,5 @@ def create_task():
 @app.route('/task-by-id')
 def task_by_id():
     return render_template('task_by_id.html')
+"""
 
-if __name__ == '__main__':
-    app.run(debug=True)
