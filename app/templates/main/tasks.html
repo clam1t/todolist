@@ -1,4 +1,4 @@
-{% extends "base_dashboard.html" %}
+{% extends "main/base_dashboard.html" %}
 
 {% block title %}All Tasks{% endblock %}
 
@@ -19,6 +19,6 @@
     </div>
 </div>
 <div style="text-align: center; margin-top: 30px;">
-    <a href="{{ url_for('create_task') }}" class="create-btn">Create New Task</a>
+    <a href="{{ url_for('main.create_task') }}" class="create-btn">Create New Task</a>
 </div>
 {% endblock %}

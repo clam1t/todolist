@@ -8,8 +8,9 @@ def create_app():
     app = Flask(__name__)
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-    app.register_blueprint(user)
-    app.register_blueprint(task)
+    app.config['SECRET_KEY'] = '111'
+    app.register_blueprint(user, url_prefix='/user')
+    app.register_blueprint(task, url_prefix='/task')
     app.register_blueprint(main)
 
     db.init_app(app)

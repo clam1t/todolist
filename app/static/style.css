@@ -18,140 +18,102 @@ body {
     padding: 20px;
 }
 
-.auth-form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 30px;
-    background: rgba(0,0,0,0.7);
-    border: 2px solid #fff;
-    border-radius: 0;
-    box-shadow: 0 0 20px rgba(255,255,255,0.2);
-    color: #fff;
+/* Навбар */
+.navbar {
+    background: rgba(0,0,0,0.8);
+    border-bottom: 2px solid #fff;
+    padding: 15px 0;
 }
 
-.auth-form.active {
-    display: block;
-}
-
-.auth-tabs {
+.navbar .container {
     display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.tab-btn {
-    padding: 12px 24px;
-    background: #000;
-    color: #fff;
-    border: 1px solid #fff;
-    cursor: pointer;
+.logo {
+    font-size: 24px;
     font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s;
-}
-.auth-btn {
-    display: inline-block;
-    padding: 12px 30px;
-    margin: 0 10px;
-    background: #000;
     color: #fff;
-    border: 2px solid #fff;
     text-decoration: none;
     text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    margin-left: 20px;
+    color: #fff;
+    text-decoration: none;
     font-weight: bold;
+    text-transform: uppercase;
     letter-spacing: 1px;
+    position: relative;
     transition: all 0.3s ease;
 }
 
-.auth-btn:hover {
-    background: #fff;
-    color: #000;
-}
-.tab-btn.active {
-    background: #fff;
-    color: #000;
-}
-
-.tab-btn:first-child {
-    border-right: none;
-}
-
-.auth-link {
+.nav-links a:hover {
     color: #fff;
-    text-align: center;
-    margin-top: 20px;
+    transform: translateY(-2px);
 }
 
-.auth-link a {
-    color: #fff;
-    font-weight: bold;
-    text-decoration: none;
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #fff;
+    transition: width 0.3s;
 }
 
-.auth-link a:hover {
-    text-decoration: underline;
-}
-
-.auth-form input {
+.nav-links a:hover::after {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #fff;
-    border-radius: 0;
+}
+
+/* Информация о пользователе */
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    padding: 5px 15px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 25px;
+}
+
+.user-avatar, .user-avatar-default {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
     background: rgba(255,255,255,0.1);
+    background-size: cover;
+    background-position: center;
+}
+
+.user-avatar {
+    object-fit: cover;
+}
+
+.username {
     color: #fff;
-    font-weight: bold;
-}
-
-.auth-form input::placeholder {
-    color: #aaa;
-    font-weight: normal;
-}
-
-.auth-form button {
-    width: 100%;
-    padding: 12px;
-    background: #fff;
-    color: #000;
-    border: none;
-    border-radius: 0;
-    cursor: pointer;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
-    transition: all 0.3s;
+    font-size: 14px;
 }
 
-.auth-form button:hover {
-    background: #000;
-    color: #fff;
-    border: 1px solid #fff;
-}
-.forms-container {
-    position: relative;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.auth-form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 30px;
-    background: rgba(0,0,0,0.7);
-    border: 2px solid #fff;
-    border-radius: 0;
-    box-shadow: 0 0 20px rgba(255,255,255,0.2);
-    color: #fff;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.auth-form.active {
-    display: block;
-    opacity: 1;
-}
-
+/* Формы авторизации */
 .auth-tabs {
     display: flex;
     justify-content: center;
@@ -185,21 +147,28 @@ body {
     transform: translateY(-2px);
 }
 
-
-.auth-link {
-    color: #fff;
-    text-align: center;
-    margin-top: 20px;
+.forms-container {
+    position: relative;
+    transition: opacity 0.3s ease-in-out;
 }
 
-.auth-link a {
+.auth-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px;
+    background: rgba(0,0,0,0.7);
+    border: 2px solid #fff;
+    border-radius: 0;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
     color: #fff;
-    font-weight: bold;
-    text-decoration: none;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
-.auth-link a:hover {
-    text-decoration: underline;
+.auth-form.active {
+    display: block;
+    opacity: 1;
 }
 
 .auth-form input {
@@ -217,6 +186,7 @@ body {
 .auth-form input:focus {
     background: rgba(255,255,255,0.2);
     transform: scale(1.02);
+    outline: none;
 }
 
 .auth-form input::placeholder {
@@ -244,6 +214,128 @@ body {
     border: 1px solid #fff;
     transform: translateY(-2px);
 }
+
+.auth-link {
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.auth-link a {
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* Кнопки авторизации на главной */
+.auth-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    margin: 0 10px;
+    background: #000;
+    color: #fff;
+    border: 2px solid #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.auth-btn:hover {
+    background: #fff;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+/* Стили для аватарки */
+.avatar-section {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 5px;
+}
+
+.avatar-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    background: rgba(255,255,255,0.1);
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s ease;
+}
+
+.avatar-preview:hover {
+    transform: scale(1.05);
+    border-color: #ff0000;
+}
+
+.avatar-input {
+    display: none;
+}
+
+.avatar-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #000;
+    color: #fff;
+    border: 1px solid #fff;
+    font-size: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.avatar-btn:hover {
+    background: #fff;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+/* Flash сообщения */
+.flash-messages {
+    max-width: 400px;
+    margin: 0 auto 20px;
+}
+
+.flash {
+    padding: 15px;
+    border: 2px solid #fff;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.flash.success {
+    border-color: #00ff00;
+    background: rgba(0, 255, 0, 0.1);
+}
+
+.flash.error {
+    border-color: #ff0000;
+    background: rgba(255, 0, 0, 0.1);
+}
+
+/* Дашборд */
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -274,7 +366,12 @@ body {
     letter-spacing: 1px;
 }
 
+.dashboard-card p {
+    color: #ccc;
+    margin: 0;
+}
 
+/* Задачи */
 .task-list {
     display: grid;
     gap: 20px;
@@ -286,11 +383,23 @@ body {
     border: 2px solid #fff;
     padding: 20px;
     color: #fff;
+    transition: all 0.3s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255,255,255,0.1);
 }
 
 .task-card h3 {
     margin-bottom: 10px;
     text-transform: uppercase;
+    color: #fff;
+}
+
+.task-card p {
+    color: #ccc;
+    margin-bottom: 15px;
 }
 
 .task-btn {
@@ -302,12 +411,14 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     transition: all 0.3s;
+    margin-right: 10px;
 }
 
 .task-btn:hover {
     background: #000;
     color: #fff;
     border: 1px solid #fff;
+    transform: translateY(-2px);
 }
 
 .create-btn {
@@ -319,16 +430,18 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     transition: all 0.3s;
+    border: 2px solid #fff;
 }
 
 .create-btn:hover {
     background: #000;
     color: #fff;
-    border: 1px solid #fff;
+    border: 2px solid #fff;
     text-decoration: none;
+    transform: translateY(-2px);
 }
 
-
+/* Формы задач */
 .task-form, .search-form {
     max-width: 500px;
     margin: 30px auto;
@@ -348,6 +461,16 @@ body {
     background: rgba(255,255,255,0.1);
     color: #fff;
     font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.task-form input:focus,
+.task-form select:focus,
+.task-form textarea:focus,
+.search-form input:focus {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.02);
+    outline: none;
 }
 
 .task-form textarea {
@@ -373,50 +496,10 @@ body {
     background: #000;
     color: #fff;
     border: 1px solid #fff;
+    transform: translateY(-2px);
 }
 
-
-
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.nav-links a {
-    margin-left: 20px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: relative;
-}
-
-.nav-links a:hover {
-    color: #fff;
-}
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -5px;
-    left: 0;
-    background-color: #fff;
-    transition: width 0.3s;
-}
-
-.nav-links a:hover::after {
-    width: 100%;
-}
-
-
+/* Футер */
 .footer {
     background: rgba(0,0,0,0.8);
     color: #fff;
@@ -427,4 +510,39 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-links a {
+        margin: 5px 10px;
+    }
+
+    .user-info {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-tabs {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tab-btn {
+        width: 100%;
+    }
 }

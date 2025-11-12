@@ -9,21 +9,38 @@
 <body>
     <nav class="navbar">
         <div class="container">
-            <a href="{{ url_for('dashboard') }}" class="logo">GRIND LIST</a>
+            <a href="{{ url_for('main.dashboard') }}" class="logo">GRIND LIST</a>
             <div class="nav-links">
-                <a href="{{ url_for('dashboard') }}">DASHBOARD</a>
-                <a href="{{ url_for('tasks') }}">ALL TASKS</a>
-                <a href="{{ url_for('create_task') }}">CREATE TASK</a>
-                <a href="{{ url_for('task_by_id') }}">FIND TASK</a>
-                <a href="{{ url_for('index') }}">LOGOUT</a>
+                <div class="user-info">
+                    {% if session.avatar %}
+                        <img src="{{ url_for('static', filename=session.avatar) }}" alt="Avatar" class="user-avatar">
+                    {% else %}
+                        <div class="user-avatar-default">⚔️</div>
+                    {% endif %}
+                    <span class="username">{{ session.username }}</span>
+                </div>
+                <a href="{{ url_for('main.dashboard') }}">DASHBOARD</a>
+                <a href="{{ url_for('main.tasks') }}">ALL TASKS</a>
+                <a href="{{ url_for('main.create_task') }}">CREATE TASK</a>
+                <a href="{{ url_for('main.task_by_id') }}">FIND TASK</a>
+                <a href="{{ url_for('user.logout') }}">LOGOUT</a>
             </div>
         </div>
     </nav>
 
     <main class="container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
         {% block content %}{% endblock %}
     </main>
-
-
 </body>
 </html>
