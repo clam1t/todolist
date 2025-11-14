@@ -592,3 +592,72 @@ body {
     text-decoration: none;
     padding: 8px 16px;
 }
+/* Стили для кнопок сортировки */
+.sort-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.sort-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.sort-btn.active {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+/* Существующие стили */
+.priority-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.priority-badge.high {
+    background: #ff6b6b;
+    color: #000;
+}
+
+.priority-badge.medium {
+    background: #ffd93d;
+    color: #000;
+}
+
+.priority-badge.low {
+    background: #6bcf7f;
+    color: #000;
+}
+
+.task-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.done-btn {
+    background: #6bcf7f !important;
+    text-decoration: none;
+    padding: 8px 16px;
+}
+
+.delete-btn {
+    background: #ff6b6b !important;
+    text-decoration: none;
+    padding: 8px 16px;
+}

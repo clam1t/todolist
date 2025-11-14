@@ -8,7 +8,6 @@
         FIND TASK BY ID
     </h1>
 
-    <!-- Flash сообщения -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <div class="flash-messages">
@@ -24,7 +23,7 @@
         <button type="submit">SEARCH</button>
     </form>
 
-    <!-- Результаты поиска -->
+
     {% if task %}
         <div class="task-details" style="margin-top: 30px;">
             <h2 style="color: #fff; text-align: center; margin-bottom: 20px;">Task Details</h2>

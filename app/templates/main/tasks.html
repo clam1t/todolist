@@ -8,7 +8,6 @@
         ALL TASKS
     </h1>
 
-
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <div class="flash-messages">
@@ -35,7 +34,6 @@
                         {% if not task.is_done %}
                             <a href="{{ url_for('task.mark_task_done_page', task_id=task.id) }}" class="task-btn done-btn">Mark Done</a>
                         {% endif %}
-                        <a href="{{ url_for('task.task_by_id_page') }}?task_id={{ task.id }}" class="task-btn view-btn">View Details</a>
                         <a href="{{ url_for('task.delete_task_page', task_id=task.id) }}" class="task-btn delete-btn" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a>
                     </div>
                 </div>
@@ -45,8 +43,26 @@
         {% endif %}
     </div>
 
+    <form class="task-form" method="POST" action="{{ url_for('task.tasks_page') }}">
+        <select name="sort_by" required>
+            <option value="">Select sert</option>
+            <option value="Newest" {% if request.form.sort_by == 'Newest' %}selected{% endif %}>🆕 Newest</option>
+            <option value="Priority" {% if request.form.sort_by == 'Priority' %}selected{% endif %}>⚡ Priority</option>
+            <option value="Deadline" {% if request.form.sort_by == 'Deadline' %}selected{% endif %}>📅 Deadline</option>
+            <option value="Status" {% if request.form.sort_by == 'Status' %}selected{% endif %}>✅ Status</option>
+        </select>
+
+        <select name="test" selected="Acs">
+            <option value="">Select sert</option>
+            <option value="Asc" {% if request.form.test == 'asc' %}selected{% endif %}>Asc</option>
+            <option value="Desc" {% if request.form.test == 'desc' %}selected{% endif %}>Desc</option>
+        </select>
+        <button type="submit">Sort</button>
+    </form>
+
     <div style="text-align: center; margin-top: 30px;">
         <a href="{{ url_for('task.create_task_page') }}" class="create-btn">Create New Task</a>
+        </div>
     </div>
 </section>
 {% endblock %}

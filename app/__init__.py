@@ -4,7 +4,7 @@ from .routes.user import user
 from .routes.task import task
 from .routes.main import main
 
-def create_app():
+def create_app(debug=True):
     app = Flask(__name__, template_folder='templates')
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
