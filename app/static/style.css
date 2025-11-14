@@ -4,8 +4,7 @@ body {
     color: #000;
     margin: 0;
     padding: 0;
-    background-color: #000;
-    background-image: url("pictures/maxresdefault.jpg");
+    background-color: rgba(0, 0, 0, 0.87);
     background-size: cover;
     background-attachment: fixed;
     min-height: 100vh;
@@ -545,4 +544,51 @@ body {
     .tab-btn {
         width: 100%;
     }
+}
+.priority-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.priority-badge.high {
+    background: #ff6b6b;
+    color: #000;
+}
+
+.priority-badge.medium {
+    background: #ffd93d;
+    color: #000;
+}
+
+.priority-badge.low {
+    background: #6bcf7f;
+    color: #000;
+}
+
+.task-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.done-btn {
+    background: #6bcf7f !important;
+    text-decoration: none;
+    padding: 8px 16px;
+}
+
+.view-btn {
+    background: #4d8bff !important;
+    text-decoration: none;
+    padding: 8px 16px;
+}
+
+.delete-btn {
+    background: #ff6b6b !important;
+    text-decoration: none;
+    padding: 8px 16px;
 }

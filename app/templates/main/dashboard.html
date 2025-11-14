@@ -3,28 +3,19 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<section class="dashboard-section">
-    <h1 style="color: #fff; text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px;">
-        WELCOME TO YOUR GRIND, {{ session.username }}!
-    </h1>
-
-    <div class="dashboard-grid">
-        <a href="{{ url_for('main.tasks') }}" class="dashboard-card">
-            <h2>VIEW ALL TASKS</h2>
-            <p>See all your current missions</p>
-        </a>
-        <a href="{{ url_for('main.create_task') }}" class="dashboard-card">
-            <h2>CREATE NEW TASK</h2>
-            <p>Add a new challenge to your grind</p>
-        </a>
-        <a href="{{ url_for('main.task_by_id') }}" class="dashboard-card">
-            <h2>FIND TASK BY ID</h2>
-            <p>Search for specific mission</p>
-        </a>
-    </div>
-
-    <div style="text-align: center; margin-top: 40px;">
-        <p style="color: #fff; font-style: italic;">"Stay hard! The grind continues..."</p>
-    </div>
-</section>
+<h1 style="color: #fff; text-align: center; text-transform: uppercase; letter-spacing: 2px;">DASHBOARD</h1>
+<div class="dashboard-grid">
+    <a href="{{ url_for('task.tasks_page') }}" class="dashboard-card">
+        <h2>View All Tasks</h2>
+        <p>See all your current tasks</p>
+    </a>
+    <a href="{{ url_for('task.create_task_page') }}" class="dashboard-card">
+        <h2>Create New Task</h2>
+        <p>Add a new task to your grind</p>
+    </a>
+    <a href="{{ url_for('task.task_by_id_page') }}" class="dashboard-card">
+        <h2>Find Task by ID</h2>
+        <p>Search for specific task</p>
+    </a>
+</div>
 {% endblock %}

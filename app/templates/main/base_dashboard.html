@@ -20,16 +20,15 @@
                     <span class="username">{{ session.username }}</span>
                 </div>
                 <a href="{{ url_for('main.dashboard') }}">DASHBOARD</a>
-                <a href="{{ url_for('main.tasks') }}">ALL TASKS</a>
-                <a href="{{ url_for('main.create_task') }}">CREATE TASK</a>
-                <a href="{{ url_for('main.task_by_id') }}">FIND TASK</a>
+                <a href="{{ url_for('task.tasks_page') }}">ALL TASKS</a>
+                <a href="{{ url_for('task.create_task_page') }}">CREATE TASK</a>
+                <a href="{{ url_for('task.task_by_id_page') }}">FIND TASK</a>
                 <a href="{{ url_for('user.logout') }}">LOGOUT</a>
             </div>
         </div>
     </nav>
 
     <main class="container">
-
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <div class="flash-messages">
