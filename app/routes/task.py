@@ -153,16 +153,15 @@ def delete_task_page(task_id):
 def tasks_json():
     if 'user_id' not in session:
         return jsonify({
-            'access': False
+            'access': False,
+            'error': 'Not authenticated'
         }), 401
-
 
     sort_by = request.args.get('sort_by', 'newest')
     order = request.args.get('order', 'desc')
 
     user_id = session['user_id']
     query = Task.query.filter_by(user_id=user_id)
-
 
     if order == 'desc':
         if sort_by == 'priority':
@@ -178,7 +177,7 @@ def tasks_json():
             tasks = query.order_by(Task.is_done.asc(), Task.id.desc()).all()
         else:
             tasks = query.order_by(Task.id.desc()).all()
-    else:  # asc
+    else:
         if sort_by == 'priority':
             priority_order = case(
                 (Task.priority == 'high', 3),
@@ -194,15 +193,13 @@ def tasks_json():
             tasks = query.order_by(Task.id.asc()).all()
 
     tasks_list = []
-    for task in tasks:
+    for task_item in tasks:
         tasks_list.append({
-            'id': task.id,
-            'title': task.title,
-            'description': task.description,
-            'priority': task.priority,
-            'deadline': task.deadline.strftime('%Y-%m-%d') if task.deadline else None,
-            'is_done': task.is_done,
-            'created_at': task.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            'id': task_item.id,
+            'title': task_item.title,
+            'priority': task_item.priority,
+            'deadline': task_item.deadline.strftime('%Y-%m-%d') if task_item.deadline else None,
+            'is_done': task_item.is_done,
         })
 
     return jsonify({

@@ -72,7 +72,6 @@ def register():
         flash(f'Ошибка при регистрации: {str(e)}', 'error')
         return redirect(url_for('main.home'))
 
-
 @user.route('/register_qt', methods=['POST'])
 def register_qt():
     try:
@@ -86,7 +85,6 @@ def register_qt():
         username = data.get('username')
         password = data.get('password')
 
-
         if not username or not password:
             return jsonify({
                 'access': False
@@ -98,7 +96,6 @@ def register_qt():
                 'access': False
             }), 409
 
-
         new_user = User(
             username=username,
             password=password
@@ -106,6 +103,10 @@ def register_qt():
 
         db.session.add(new_user)
         db.session.commit()
+
+
+        session['user_id'] = new_user.id
+        session['username'] = new_user.username
 
         return jsonify({
             'access': True,
@@ -159,6 +160,9 @@ def login_qt():
 
     user = User.query.filter_by(username=username, password=password).first()
     if user:
+        session['user_id'] = user.id
+        session['username'] = user.username
+
         return jsonify({
             'access': True,
             'user': {
