@@ -61,12 +61,6 @@ def tasks_page():
 
 
 
-
-
-
-
-
-
 @task.route('/create_task', methods=['GET', 'POST'])
 def create_task_page():
     if 'user_id' not in session:
@@ -153,3 +147,107 @@ def delete_task_page(task_id):
         flash('Task not found', 'error')
 
     return redirect(url_for('task.tasks_page'))
+
+
+@task.route('/tasks_json', methods=['GET'])
+def tasks_json():
+    if 'user_id' not in session:
+        return jsonify({
+            'access': False
+        }), 401
+
+
+    sort_by = request.args.get('sort_by', 'newest')
+    order = request.args.get('order', 'desc')
+
+    user_id = session['user_id']
+    query = Task.query.filter_by(user_id=user_id)
+
+
+    if order == 'desc':
+        if sort_by == 'priority':
+            priority_order = case(
+                (Task.priority == 'high', 1),
+                (Task.priority == 'medium', 2),
+                (Task.priority == 'low', 3),
+            )
+            tasks = query.order_by(priority_order, Task.id.desc()).all()
+        elif sort_by == 'deadline':
+            tasks = query.order_by(Task.deadline.asc().nulls_last(), Task.id.desc()).all()
+        elif sort_by == 'status':
+            tasks = query.order_by(Task.is_done.asc(), Task.id.desc()).all()
+        else:
+            tasks = query.order_by(Task.id.desc()).all()
+    else:  # asc
+        if sort_by == 'priority':
+            priority_order = case(
+                (Task.priority == 'high', 3),
+                (Task.priority == 'medium', 2),
+                (Task.priority == 'low', 1),
+            )
+            tasks = query.order_by(priority_order, Task.id.desc()).all()
+        elif sort_by == 'deadline':
+            tasks = query.order_by(Task.deadline.desc().nulls_last(), Task.id.desc()).all()
+        elif sort_by == 'status':
+            tasks = query.order_by(Task.is_done.desc(), Task.id.desc()).all()
+        else:
+            tasks = query.order_by(Task.id.asc()).all()
+
+    tasks_list = []
+    for task in tasks:
+        tasks_list.append({
+            'id': task.id,
+            'title': task.title,
+            'description': task.description,
+            'priority': task.priority,
+            'deadline': task.deadline.strftime('%Y-%m-%d') if task.deadline else None,
+            'is_done': task.is_done,
+            'created_at': task.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        })
+
+    return jsonify({
+        'access': True,
+        'tasks': tasks_list,
+        'count': len(tasks_list)
+    }), 200
+
+
+@task.route('/task/<int:task_id>/done_json', methods=['POST'])
+def mark_task_done_json(task_id):
+    if 'user_id' not in session:
+        return jsonify({
+            'access': False
+        }), 401
+
+    task = Task.query.filter_by(id=task_id, user_id=session['user_id']).first()
+    if task:
+        task.is_done = True
+        db.session.commit()
+        return jsonify({
+            'access': True
+        }), 200
+    else:
+        return jsonify({
+            'access': False
+        }), 404
+
+
+
+@task.route('/task/<int:task_id>/delete_json', methods=['POST'])
+def delete_task_json(task_id):
+    if 'user_id' not in session:
+        return jsonify({
+            'access': False
+        }), 401
+
+    task = Task.query.filter_by(id=task_id, user_id=session['user_id']).first()
+    if task:
+        db.session.delete(task)
+        db.session.commit()
+        return jsonify({
+            'access': True
+        }), 200
+    else:
+        return jsonify({
+            'access': False
+        }), 404

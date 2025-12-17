@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
 import os
 from werkzeug.utils import secure_filename
 from ..extentions import db
 from ..models.user import User
+import json
 
 user = Blueprint('user', __name__)
 
@@ -72,6 +73,56 @@ def register():
         return redirect(url_for('main.home'))
 
 
+@user.route('/register_qt', methods=['POST'])
+def register_qt():
+    try:
+        data = request.get_json()
+
+        if not data:
+            return jsonify({
+                'access': False
+            }), 400
+
+        username = data.get('username')
+        password = data.get('password')
+
+
+        if not username or not password:
+            return jsonify({
+                'access': False
+            }), 400
+
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            return jsonify({
+                'access': False
+            }), 409
+
+
+        new_user = User(
+            username=username,
+            password=password
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        return jsonify({
+            'access': True,
+            'user': {
+                'id': new_user.id,
+                'username': new_user.username
+            }
+        }), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({
+            'access': False
+        }), 500
+
+
+
 @user.route('/login', methods=['POST'])
 def login():
     username = request.form['username']
@@ -87,6 +138,38 @@ def login():
     else:
         flash('Неверное имя пользователя или пароль', 'error')
         return redirect(url_for('main.home'))
+
+
+@user.route('/login_qt', methods=['POST'])
+def login_qt():
+    data = request.get_json()
+
+    if not data:
+        return jsonify({
+            'access': False
+        }), 400
+
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return jsonify({
+            'access': False
+        }), 400
+
+    user = User.query.filter_by(username=username, password=password).first()
+    if user:
+        return jsonify({
+            'access': True,
+            'user': {
+                'id': user.id,
+                'username': user.username,
+            }
+        }), 200
+    else:
+        return jsonify({
+            'access': False
+        }), 401
 
 @user.route('/logout')
 def logout():
