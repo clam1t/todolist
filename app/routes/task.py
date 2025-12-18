@@ -248,3 +248,60 @@ def delete_task_json(task_id):
         return jsonify({
             'access': False
         }), 404
+
+@task.route('/create_task_json', methods=['GET', 'POST'])
+def create_task_page_json():
+    data = request.get_json()
+    if 'user_id' not in session:
+        return jsonify({
+            'access': False
+        }), 401
+
+
+    title = data.get('title')
+    priority = data.get('priority')
+    deadline = data.get('deadline')
+
+    new_task = Task(
+        title=title,
+        priority=priority,
+        deadline=datetime.strptime(deadline, '%Y-%m-%d').date() if deadline else None,
+        user_id=session['user_id']
+    )
+    db.session.add(new_task)
+    db.session.commit()
+    return jsonify({
+        'access': True
+    }), 200
+
+
+@task.route('/task_by_id_json', methods=['GET', 'POST'])
+def task_by_id_page_json():
+    data = request.get_json()
+    if 'user_id' not in session:
+        return jsonify({'access': False}), 401
+
+    task_id = data.get('task_id')
+    if not task_id:
+        return jsonify({'access': False, 'error': 'No task ID provided'}), 400
+
+
+    task_obj = Task.query.filter_by(id=task_id, user_id=session['user_id']).first()
+
+    if not task_obj:
+        return jsonify({'access': False, 'error': 'Task not found'}), 404
+
+
+    task_data = {
+        'id': task_obj.id,
+        'title': task_obj.title,
+        'priority': task_obj.priority,
+        'deadline': task_obj.deadline.strftime('%Y-%m-%d') if task_obj.deadline else None,
+        'is_done': task_obj.is_done,
+    }
+
+    return jsonify({
+        'access': True,
+        'task': task_data
+    }), 200
+
