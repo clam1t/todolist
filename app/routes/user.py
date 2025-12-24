@@ -1,16 +1,14 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify, current_app
 import os
 from werkzeug.utils import secure_filename
 from ..extentions import db
 from ..models.user import User
+from app import socketio
 import json
-
 user = Blueprint('user', __name__)
-
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 UPLOAD_FOLDER = 'app/static/uploads/avatars'
-
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -72,6 +70,38 @@ def register():
         flash(f'Ошибка при регистрации: {str(e)}', 'error')
         return redirect(url_for('main.home'))
 
+
+
+
+@user.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+
+    user = User.query.filter_by(username=username, password=password).first()
+    if user:
+        session['user_id'] = user.id
+        session['username'] = user.username
+        session['avatar'] = user.avatar
+
+        return redirect(url_for('main.dashboard'))
+    else:
+        flash('Неверное имя пользователя или пароль', 'error')
+        return redirect(url_for('main.home'))
+
+
+@socketio.on('connect')
+def on_connect():
+    # Access the standard Flask session (requires proper setup)
+    user_id = session.get('user_id')
+    # The sid is available in the request context here
+    sid = request.sid
+    if user_id:
+        current_app.config['socket_users'][user_id] = sid
+        print(f"User {user_id} connected with SID: {sid}")
+    else:
+        print("Unauthenticated client connected")
+
 @user.route('/register_qt', methods=['POST'])
 def register_qt():
     try:
@@ -121,24 +151,6 @@ def register_qt():
         return jsonify({
             'access': False
         }), 500
-
-
-
-@user.route('/login', methods=['POST'])
-def login():
-    username = request.form['username']
-    password = request.form['password']
-
-    user = User.query.filter_by(username=username, password=password).first()
-    if user:
-        session['user_id'] = user.id
-        session['username'] = user.username
-        session['avatar'] = user.avatar
-
-        return redirect(url_for('main.dashboard'))
-    else:
-        flash('Неверное имя пользователя или пароль', 'error')
-        return redirect(url_for('main.home'))
 
 
 @user.route('/login_qt', methods=['POST'])

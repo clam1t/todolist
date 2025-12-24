@@ -1,12 +1,14 @@
 from flask import Flask
 from .extentions import db, migrate
-from .routes.user import user
-from .routes.task import task
-from .routes.main import main
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
+socketio = SocketIO()
 
 def create_app(debug=True):
+    from .routes.user import user
+    from .routes.task import task
+    from .routes.main import main
     app = Flask(__name__, template_folder='templates')
-
+    app.config['socket_users'] = {}
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
     app.config['SECRET_KEY'] = '111'
     app.register_blueprint(user, url_prefix='/user')
@@ -15,6 +17,7 @@ def create_app(debug=True):
 
     db.init_app(app)
     migrate.init_app(app,db)
+    socketio.init_app(app)
     with app.app_context():
         db.create_all()
 
