@@ -1,8 +1,12 @@
-from sqlalchemy import case
+import time
 
-from flask import Blueprint, render_template, flash, redirect, url_for, session, request, jsonify
-from ..extentions import db
-from ..models.task import Task
+import eventlet
+eventlet.monkey_patch()
+from sqlalchemy import case
+from app import socketio
+from flask import Blueprint, render_template, flash, redirect, url_for, session, request, jsonify, current_app
+from app.extentions import db
+from app.models.task import Task
 from datetime import datetime
 
 task = Blueprint('task', __name__)
@@ -220,14 +224,23 @@ def mark_task_done_json(task_id):
     if task:
         task.is_done = True
         db.session.commit()
+        task_done(session['user_id'], task_id)
         return jsonify({
             'access': True
         }), 200
+
     else:
         return jsonify({
             'access': False
         }), 404
 
+def task_done(session_user_id, task_id):
+    user_id = session_user_id
+    sid = current_app.config.get('socket_users', {}).get(user_id)
+    if sid:
+        socketio.emit('task_done', {'task_id': task_id, 'done': True}, to=sid)
+    else:
+        print("Unauthenticated client connected")
 
 
 @task.route('/task/<int:task_id>/delete_json', methods=['POST'])
@@ -241,6 +254,7 @@ def delete_task_json(task_id):
     if task:
         db.session.delete(task)
         db.session.commit()
+        task_del(session['user_id'], task_id)
         return jsonify({
             'access': True
         }), 200
@@ -248,6 +262,15 @@ def delete_task_json(task_id):
         return jsonify({
             'access': False
         }), 404
+
+
+def task_del(session_user_id, task_id):
+    user_id = session_user_id
+    sid = current_app.config.get('socket_users', {}).get(user_id)
+    if sid:
+        socketio.emit('task_del', {'task_id': task_id, 'del': True}, to=sid)
+    else:
+        print("Unauthenticated client connected")
 
 @task.route('/create_task_json', methods=['GET', 'POST'])
 def create_task_page_json():

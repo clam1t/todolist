@@ -1,3 +1,7 @@
+import time
+
+import eventlet
+eventlet.monkey_patch()
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify, current_app
 import os
 from werkzeug.utils import secure_filename
@@ -71,8 +75,6 @@ def register():
         return redirect(url_for('main.home'))
 
 
-
-
 @user.route('/login', methods=['POST'])
 def login():
     username = request.form['username']
@@ -92,9 +94,7 @@ def login():
 
 @socketio.on('connect')
 def on_connect():
-    # Access the standard Flask session (requires proper setup)
     user_id = session.get('user_id')
-    # The sid is available in the request context here
     sid = request.sid
     if user_id:
         current_app.config['socket_users'][user_id] = sid

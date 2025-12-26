@@ -17,22 +17,49 @@
             </div>
         {% endif %}
     {% endwith %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+    var socket = io();
+    socket.on('task_done', function(data) {
+        let task = data;
+        if (task.done == true){
+            let elem = document.getElementById('task_'+task.task_id);
+            let innera = elem.querySelector('.done-btn');
+            if (innera) {
+                innera.remove();
+            }
+            let innerh = elem.querySelector('.done_h');
+            innerh.textContent += '✅';
 
+            let innerp = elem.querySelector('.done_p')
+            innerp.textContent = 'Status:Completed'
+        }
+    });
+    socket.on('task_del', function(data) {
+        let task = data;
+        if (task.del == true){
+            let elem = document.getElementById('task_'+task.task_id);
+            if (elem) {
+                elem.remove();
+            }
 
+        }
+    });
+    </script>
     <div class="task-list">
         {% if tasks %}
             {% for task in tasks %}
-                <div class="task-card">
+                <div id="task_{{task.id}}" class="task-card">
                     <div style="display: flex; justify-content: space-between; align-items: start;">
-                        <h3>{{ task.title }}{% if task.is_done %} ✅{% endif %}</h3>
+                        <h3 class="done_h" > {{ task.title }}{% if task.is_done %} ✅{% endif %}</h3>
                         <span class="priority-badge {{ task.priority }}">{{ task.priority.upper() }}</span>
                     </div>
                     <p><strong>ID:</strong> {{ task.id }}</p>
                     <p><strong>Deadline:</strong> {{ task.deadline.strftime('%Y-%m-%d') if task.deadline else 'Not set' }}</p>
-                    <p><strong>Status:</strong> {% if task.is_done %}Completed{% else %}In Progress{% endif %}</p>
+                    <p class="done_p"><strong>Status:</strong>{% if task.is_done %}Completed{% else %}In Progress{% endif %}</p>
                     <div class="task-actions">
                         {% if not task.is_done %}
-                            <a href="{{ url_for('task.mark_task_done_page', task_id=task.id) }}" class="task-btn done-btn">Mark Done</a>
+                        <a href="{{ url_for('task.mark_task_done_page', task_id=task.id) }}" class="task-btn done-btn">Mark Done</a>
                         {% endif %}
                         <a href="{{ url_for('task.delete_task_page', task_id=task.id) }}" class="task-btn delete-btn" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a>
                     </div>

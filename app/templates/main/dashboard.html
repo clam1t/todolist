@@ -10,6 +10,11 @@
         socket.emit('my event', {data: 'I\'m connected!'});
         console.log("text")
     });
+
+    socket.on('user_connected', function(data) {
+        console.log(data)
+    });
+
 </script>
 <h1 style="color: #fff; text-align: center; text-transform: uppercase; letter-spacing: 2px;">DASHBOARD</h1>
 <div class="dashboard-grid">

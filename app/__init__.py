@@ -1,3 +1,5 @@
+import eventlet
+eventlet.monkey_patch()
 from flask import Flask
 from .extentions import db, migrate
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
@@ -21,4 +23,4 @@ def create_app(debug=True):
     with app.app_context():
         db.create_all()
 
-    return app
+    return socketio, app
