@@ -213,7 +213,7 @@ def tasks_json():
     }), 200
 
 
-@task.route('/task/<int:task_id>/done_json', methods=['POST'])
+@task.route('/task/<int:task_id>/done_json', methods=['PATCH'])
 def mark_task_done_json(task_id):
     if 'user_id' not in session:
         return jsonify({
@@ -243,7 +243,7 @@ def task_done(session_user_id, task_id):
         print("Unauthenticated client connected")
 
 
-@task.route('/task/<int:task_id>/delete_json', methods=['POST'])
+@task.route('/task/<int:task_id>/delete_json', methods=['DELETE'])
 def delete_task_json(task_id):
     if 'user_id' not in session:
         return jsonify({
